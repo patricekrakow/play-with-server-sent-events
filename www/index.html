@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- play-with-server-sent-events/index.html -->
+<html>
+  <head>
+    <title>Random (via SSE)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <style>
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #80c080;
+  height: 100%;
+  margin: 0px;
+}
+
+table {
+  height: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td {
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+p {
+  margin: 0px;
+  font-size: 10px;
+  text-align: right;
+  color: white;
+  margin-right: 10px;
+}
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td id="text">Hello!</td>
+      </tr>
+    </table>
+    <p id="info">...</p>
+    <script>
+const text = document.getElementById('text')
+
+const ssePort = 8091
+const url = `http://${location.hostname}:${ssePort}/random`
+info.innerHTML = url
+
+const sseSource = new EventSource(url)
+
+sseSource.onmessage = function (event) {
+  const value = JSON.parse(event.data).random
+  text.innerHTML = value
+  console.log(event.data)
+}
+    </script>
+  </body>
+</html>
